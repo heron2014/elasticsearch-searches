@@ -1,0 +1,29 @@
+{
+  "name": "elasticsearch-searches",
+  "version": "1.0.0",
+  "description": "Advanced searches using elasticsearch",
+  "main": "lib/start.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node lib/start.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heron2014/elasticsearch-searches.git"
+  },
+  "keywords": [
+    "elasticsearch",
+    "hapi"
+  ],
+  "author": "heron2014",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/heron2014/elasticsearch-searches/issues"
+  },
+  "homepage": "https://github.com/heron2014/elasticsearch-searches#readme",
+  "dependencies": {
+    "hapi": "^11.1.2",
+    "hoek": "^3.0.4",
+    "inert": "^3.2.0"
+  }
+}
