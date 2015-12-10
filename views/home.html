@@ -2,15 +2,30 @@
 <a href="/create">Add user to database</a>
 
 <form method="get" action="/search">
-    <input name="" value="" placeholder="Job Title">
-    <input name="" value="" placeholder="Name">
-    <input name="" value="" placeholder="Location">
-    <input name="" value="" placeholder="Skills">
+    <input name="job" value="" placeholder="Job Title">
+    <input name="name" value="" placeholder="Name">
+    <input name="location" value="" placeholder="Location">
+    <!--<p class="show"></p>-->
+    <!--<div class="multiple-select">-->
+        <!--<ul>-->
+            <!--{{#each skills}}-->
+                <!--<li>-->
+                    <!--<input type="checkbox" name="skill" value="{{this}}"/>{{this}}-->
+                <!--</li>-->
+            <!--{{/each}}-->
+        <!--</ul>-->
+
+    <!--</div>-->
     <button type="submit" value="Search">Search</button>
 </form>
 
 
-<h2>Users</h2>
-{{#each users}}
-<p>{{fullname}}</p>
-{{/each}}
+<!--<h2>Candidates</h2>-->
+<!--{{#each users}}-->
+<!--<p>{{fullname}}</p>-->
+<!--{{/each}}-->
+
+
+<div class="results">
+
+</div>
