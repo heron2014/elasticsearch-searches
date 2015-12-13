@@ -1,10 +1,10 @@
 # Notes about elasticsearch queries
 
-## ES structure
+### ES structure
 
 ![Structure](https://github.com/heron2014/databases-workshop/blob/master/elasticsearch/img/es_structure.png)
 
-## Data in Elasticsearch can be divided into two types:
+### Data in Elasticsearch can be divided into two types:
 
 * **exact values** (date, user ID but also exact strings such as username or email),eg,
 Foo is not the same as foo 
@@ -16,11 +16,11 @@ Querying full-text data are the answers on these questions:
 "How well does this document match the query or How relevant is this document?" as opposed to "Does this docu‐
 ment match the query?"
 
-So how ES understands the full-text query?
+**So how ES understands the full-text query?**
 
 Elasticsearch first **analyzes** the text, and then uses the results to build an **inverted index**.
 
-### What is inverted index and what is analysis? 
+#### What is inverted index and what is analysis? 
 
 Is the list of all unique words that appear in any document, and for each word, a list of the documents in which it appears. 
 
@@ -48,9 +48,9 @@ To fix that problem we need to apply normalization rules to our query string, wh
 I recommend reading chapter 6 Mapping and Analysis (pages 79-87)
 
 
-## There are two forms of the search API:
+### There are two forms of the search API:
 
-1. Query-string (light) where we we pass the search as a URL query-string parameter, e.g
+#### **Query-string (light)** where we we pass the search as a URL query-string parameter, e.g
 
 ```
 GET /myIndex/myType/myPath?q=field:Smith
@@ -124,7 +124,7 @@ instead of disabling the ```_all`` field completely, disable ```include_in_all``
 }
 ```
 
-## Selected query-string synatax [more here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax)
+##### Selected query-string synatax [more here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax)
 
 * any of the fields book.title, book.content or book.date contains quick or brown 
 
@@ -227,35 +227,18 @@ Example of query rewritten using ```match query```
 * grouping and reserved characters [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#_grouping)
 
 
-2. Query DSL (domain specific language) - uses JSON request body (rich search language)
+#### **Query DSL (domain specific language)** - uses JSON request body (rich search language)
 
-Example:
 
-## Useful commands: 
+Coming Soon
 
-### ```_count```
 
-Count the number of documents in a cluster
 
-```
-curl -XGET 'http://localhost:9200/yourIndex/yourType/_count' -d '
-  {
-    "query":{
-    "match_all":{}
-    }
-  }
-'
-```
 
-### _mapping [more here](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html)
 
-Mapping defines how a document with its fields are stored and indexed. 
 
-You can quickly check fields data types in a document by using following command:
 
-```
-curl -XGET 'http://localhost:9200/yourIndex/yourType/_mapping'
-```
+
 
 ## Multiple Query Strings
 
@@ -280,3 +263,33 @@ query: {
 **term** query only exact values as in database, e.g If location: 'London' and you query london - it will not find your match
 
 #### Difference between **must** and **should**?
+
+tbc.
+
+
+
+#### Useful commands: 
+
+* ```_count```
+
+Count the number of documents in a cluster
+
+```
+curl -XGET 'http://localhost:9200/yourIndex/yourType/_count' -d '
+  {
+    "query":{
+    "match_all":{}
+    }
+  }
+'
+```
+
+* _mapping [more here](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html)
+
+Mapping defines how a document with its fields are stored and indexed. 
+
+You can quickly check fields data types in a document by using following command:
+
+```
+curl -XGET 'http://localhost:9200/yourIndex/yourType/_mapping'
+```
