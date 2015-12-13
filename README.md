@@ -1,5 +1,3 @@
-# elasticsearch-searches
-
 # Notes about elasticsearch queries
 
 ## ES structure
