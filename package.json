@@ -23,6 +23,7 @@
   "homepage": "https://github.com/heron2014/elasticsearch-searches#readme",
   "dependencies": {
     "elasticsearch": "^10.0.1",
+    "env2": "^2.0.4",
     "handlebars": "^4.0.5",
     "hapi": "^11.1.2",
     "hoek": "^3.0.4",
