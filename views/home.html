@@ -1,0 +1,45 @@
+<h1>This is a home page</h1>
+<a href="/create">Add user to database</a>
+
+<form method="get" action="/search">
+    <input name="job" value="" placeholder="Job Title">
+    <input name="name" value="" placeholder="Name">
+    <input name="location" value="" placeholder="Location">
+    <!--<p class="show"></p>-->
+    <!--<div class="multiple-select">-->
+        <!--<ul>-->
+            <!--{{#each skills}}-->
+                <!--<li>-->
+                    <!--<input type="checkbox" name="skill" value="{{this}}"/>{{this}}-->
+                <!--</li>-->
+            <!--{{/each}}-->
+        <!--</ul>-->
+
+    <!--</div>-->
+    <button type="submit" value="Search">Search</button>
+</form>
+
+
+<!--<h2>Candidates</h2>-->
+<!--{{#each users}}-->
+<!--<p>{{fullname}}</p>-->
+<!--{{/each}}-->
+
+
+<div class="results">
+
+
+    {{#each results}}
+    <p>{{location}} |{{name}}|{{job}}</p>
+    {{/each}}
+
+
+    <br/>
+    <br/>
+    
+    <p>Fom myusers db</p>
+    {{#each users}}
+    <p>{{location}} | {{name}} | {{job}} | {{company}}</p>
+    {{/each}}
+
+</div>
