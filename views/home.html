@@ -5,6 +5,7 @@
     <input name="job" value="" placeholder="Job Title">
     <input name="name" value="" placeholder="Name">
     <input name="location" value="" placeholder="Location">
+    <input name="skills" value="" placeholder="Skills">
     <!--<p class="show"></p>-->
     <!--<div class="multiple-select">-->
         <!--<ul>-->
@@ -30,16 +31,21 @@
 
 
     {{#each results}}
-    <p>{{location}} |{{name}}|{{job}}</p>
+    <p>------------------------------------------</p>
+    <p>{{location}} |{{fullname}}|{{headline}} </p>
+    <p>Skills</p>
+        {{#each skills}}
+        <p>{{skill}}</p>
+        {{/each}}
     {{/each}}
-
+    
 
     <br/>
     <br/>
     
-    <p>Fom myusers db</p>
+   <!--  <p>Fom myusers db</p>
     {{#each users}}
     <p>{{location}} | {{name}} | {{job}} | {{company}}</p>
-    {{/each}}
+    {{/each}} -->
 
 </div>

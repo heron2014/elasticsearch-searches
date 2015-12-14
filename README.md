@@ -1,20 +1,18 @@
 # Notes about elasticsearch queries
 
-### ES structure
-
 ![Structure](https://github.com/heron2014/databases-workshop/blob/master/elasticsearch/img/es_structure.png)
 
 ### Data in Elasticsearch can be divided into two types:
 
 * **exact values** (date, user ID but also exact strings such as username or email),eg,
-Foo is not the same as foo 
-Exact values are easy to query, either matches the query or it doesn't. 
+  Foo is not the same as foo.
+
+  Exact values are easy to query, either matches the query or it doesn't. 
 
 * **full text** (textual data, but also reffered as unstructured data such as body of the email or text of the tweet)
 
-Querying full-text data are the answers on these questions: 
-"How well does this document match the query or How relevant is this document?" as opposed to "Does this docu‐
-ment match the query?"
+  Querying full-text data is much more subtle. We are not just asking, “Does this docu‐
+ment match the query” but “How well does this document match the query?” or "Hoe relevant is this document to given query?"
 
 **So how ES understands the full-text query?**
 
@@ -22,7 +20,7 @@ Elasticsearch first **analyzes** the text, and then uses the results to build an
 
 #### What is inverted index and what is analysis? 
 
-Is the list of all unique words that appear in any document, and for each word, a list of the documents in which it appears. 
+**Inverted index** is the list of all unique words that appear in any document, and for each word, a list of the documents in which it appears. 
 
 eg, lets say we have a field called `title` with following content:
 
@@ -229,6 +227,19 @@ Example of query rewritten using ```match query```
 
 #### **Query DSL (domain specific language)** - uses JSON request body (rich search language)
 
+**Query DSL** allows us to build much more complicated, robust queries.
+
+Example of simple query DSL:
+
+```
+{
+  "query" : {
+    "match" : {
+      "last_name" : "Smith"
+    }
+  }
+}
+```
 
 Coming Soon
 
