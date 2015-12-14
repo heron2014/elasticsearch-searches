@@ -240,7 +240,7 @@ Coming Soon
 
 
 
-## Multiple Query Strings
+##### Multiple Query Strings
 
 If you want to perform search on two fields, e.g: name and location
 
@@ -262,13 +262,13 @@ query: {
 **match** - one of several types of query (matches lower and uppercases) [more](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html) 
 **term** query only exact values as in database, e.g If location: 'London' and you query london - it will not find your match
 
-#### Difference between **must** and **should**?
+##### Difference between **must** and **should**?
 
 tbc.
 
 
 
-#### Useful commands: 
+##### Useful commands: 
 
 * ```_count```
 
