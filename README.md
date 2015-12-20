@@ -1,4 +1,4 @@
-# Notes about elasticsearch queries
+# Notes about elasticsearch queries [Book to download](http://it-ebooks.info/book/4869/)
 
 ![Structure](https://github.com/heron2014/databases-workshop/blob/master/elasticsearch/img/es_structure.png)
 
@@ -39,9 +39,138 @@ then we create a sorted list of all the unique terms, and then list in which doc
 Now, if we want to search for quick brown , we just need to find the documents in
 which each term appears.
 
-What if we want to search for Quick as opposed to quick? Our search would fail because we don't have exact value Quick. 
+What if we want to search for 'Quick' as opposed to 'quick'? Our search would fail because we don't have exact value Quick. 
 
 To fix that problem we need to apply normalization rules to our query string, which is called **analysis**.
+
+Normalizing these unique terms is some sort of transformation into standard form to improve searchablity. So in other words we can say that **analysis** is how full text is processed to make it searchable.
+
+To do that job we need **analyzers**. You need to understand **when analyzers are used** to be able to get the best search results.
+
+### When analyzers are used?
+
+* when you query a full-text field, the query will apply analyzer to the query string as default
+
+* when you query an exact-value field, the query will NOT analyze the query string, but instead search for the exact value that you have specified
+
+Example: 
+
+Let's say we query a date: 2014-10-13
+
+* if you query on full-text field, the analysis process will convert that date into 3 terms/tokens: 2014 | 10 | 13. 
+Your results that way might match more documents than you have expected.
+
+* if you query on an exact-value fields e.g date, you will match 1 document which has exact value: 2014-10-13, but if you query only 2014 you will get 0 results.
+
+
+You can also specified different type of analyzer which suits your search query. 
+
+**Elasticsearch has two types of analyzers:** 
+
+* **built-in analyzers (page 84) or [here](https://www.elastic.co/guide/en/elasticsearch/guide/current/analysis-intro.html#_built_in_analyzers)**
+
+  * standard analyzers (default) 
+    It splits the text on word boundaries and removes most punctuation eg,
+    Original string:
+    ```"Set the shape to semi-transparent by calling set_trans(5)"```
+    Standard analyzer would produce:
+    ```set, the, shape, to, semi, transparent, by, calling, set_trans, 5``` 
+
+    Try it yourself by running:
+
+    ```
+    curl -XGET 'localhost:9200/_analyze?analyzer=standard' -d 'Text to analyze'
+    ```
+
+    Response is :
+
+    ```
+    {
+     "tokens": [
+        {
+           "token":        "text",
+           "start_offset": 0,
+           "end_offset":   4,
+           "type":         "<ALPHANUM>",
+           "position":     1
+        },
+        {
+           "token":        "to",
+           "start_offset": 5,
+           "end_offset":   7,
+           "type":         "<ALPHANUM>",
+           "position":     2
+        },
+        {
+           "token":        "analyze",
+           "start_offset": 8,
+           "end_offset":   15,
+           "type":         "<ALPHANUM>",
+           "position":     3
+        }
+     ]
+    }
+    ```
+
+    **token** is the actual term that will be stored in the index
+
+    **position** indicates the order in which the terms appeared
+
+
+  * simple analyzers
+  The simple analyzer splits the text on anything that isn’t a letter, and lowercases the terms. It would produce:
+
+  ```set, the, shape, to, semi, transparent, by, calling, set, trans```
+
+  * whitespaces analyzers
+  The whitespace analyzer splits the text on whitespace. It doesn’t lowercase.
+
+  ```Set, the, shape, to, semi-transparent, by, calling, set_trans(5)```
+  * language analyzers
+  Language-specific analyzers are available for many languages.
+
+* **custom analyzers (page 134)**
+
+Custom analyzers gives you real power by combining character filters, tokenizers, and token filters in a configuration that suits your particular data.
+
+You can for example:
+
+* Strip out HTML by using the html_strip character filter
+* Replace & characters with " and " , using a custom mapping character filter
+* Lowercase terms, using the lowercase token filter
+* Remove a custom list of stopwords, using a custom stop token filter ('the', 'a') 
+
+and mmore, reference page 134.
+
+
+### When to not use analyzers
+
+The default value of index for a string field is analyzed. If we want to map the field as an exact value, we need to set it to not_analyzed:
+
+```
+{
+    "tag": {
+        "type":     "string",
+        "index":    "not_analyzed"
+    }
+}
+```
+
+To do this, we need to first delete our old index (because it has the incorrect mapping) and create a new one with the correct mappings.
+
+#### When this is useful?
+
+```
+curl -XGET 'localhost:9200/_analyze?analyzer=standard' -d 'we are looking for c++ in skills'
+
+```
+
+Standard analyzer which is passed by deafult will strip off '++' and transform the word into token : c. This way our search results will fail on 'c++'.
+
+We still need to escape special characters [read here about special characters](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#_reserved_characters)
+
+[How to setup a tokenizer in elasticsearch](http://stackoverflow.com/questions/15079064/how-to-setup-a-tokenizer-in-elasticsearch): 
+
 
 I recommend reading chapter 6 Mapping and Analysis (pages 79-87)
 
@@ -297,7 +426,7 @@ curl -XGET 'http://localhost:9200/yourIndex/yourType/_count' -d '
 
 * _mapping [more here](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html)
 
-Mapping defines how a document with its fields are stored and indexed. 
+Mapping defines how a document with its fields are stored and indexed, what are the datatype for each field, and how the field should be handled by Elasticsearch. 
 
 You can quickly check fields data types in a document by using following command:
 
