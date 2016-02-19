@@ -1,3 +1,4 @@
+## WIP
 # Notes about elasticsearch queries [Book to download](http://it-ebooks.info/book/4869/)
 
 ![Structure](https://github.com/heron2014/databases-workshop/blob/master/elasticsearch/img/es_structure.png)
